@@ -1,26 +1,27 @@
 'use strict'
 
 function requestLog(data){
-    ApiConnector.login(data, () => {console.log(response)});
-    // if (ApiConnector.login(data)) {
-    //     if (loginFormCallback()){
-    //         return location.reload();
-    //     }
-    //     loginErrorMessageBox();    
-    // }
-    // loginErrorMessageBox()  ;  
+    ApiConnector.login(data, (response) => {
+        //console.log(response);
+        if (response.success) {
+            location.reload();
+        } else {
+            using.loginErrorMessageBox.innerText = "Error";
+        }
+    });
 }
 
-// function requestReg(data){
-//     if (ApiConnector.login(data)) {
-//         if (registerFormCallback()){
-//             return location.reload();
-//         }
-//         registerErrorMessageBox()    
-//     }
-//     registerErrorMessageBox()    
-// }
+function requestReg(data){
+    ApiConnector.register(data, (response) => {
+        //console.log(response);
+        if (response.success) {
+            location.reload();
+        } else {
+            using.registerErrorMessageBox.innerText = "Error";
+        }
+    });
+}
 
 let using = new UserForm();
 using.loginFormCallback = requestLog;
-// using.registerFormCallback = requestReg(data);
+using.registerFormCallback = requestReg;
