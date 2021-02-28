@@ -2,22 +2,21 @@
 
 function requestLog(data){
     ApiConnector.login(data, (response) => {
-        //console.log(response);
         if (response.success) {
             location.reload();
         } else {
-            using.loginErrorMessageBox.innerText = "Error";
+            using.setLoginErrorMessage(response.data);
         }
     });
 }
 
 function requestReg(data){
     ApiConnector.register(data, (response) => {
-        //console.log(response);
+        console.log(response);
         if (response.success) {
             location.reload();
         } else {
-            using.registerErrorMessageBox.innerText = "Error";
+            using.setRegisterErrorMessage(response.data);
         }
     });
 }

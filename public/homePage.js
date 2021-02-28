@@ -1,7 +1,7 @@
 "use strict"
+//logout
 function funcLogout(){
     ApiConnector.logout((response) => {
-        console.log(response);
         if (response.success) {
             location.reload();
         } else {
@@ -12,10 +12,13 @@ function funcLogout(){
 
 let logout = new LogoutButton();
 logout.action = funcLogout;
+
+//profile
 ApiConnector.current((response) => {
     if (response.success) {ProfileWidget.showProfile(response.data)};
 });
 
+//courses
 let course = new RatesBoard();
 
 let requestCourses = function() {
@@ -24,14 +27,84 @@ let requestCourses = function() {
             course.clearTable;
             course.fillTable(response.data);
         }
+      });
+};
+setInterval(requestCourses, 6000);
+
+//addMoney
+let money = new MoneyManager();
+
+function showMessage(response){
+    if (response.success){
+        ProfileWidget.showProfile(response.data);
+        money.setMessage(false, "Операция прошла успешно");
+    } else {
+        money.setMessage(true, response.data);
+    };
+};
+
+money.addMoneyCallback = function(data){
+    ApiConnector.addMoney(data, (response) => {
+        showMessage(response);
     });
 };
-requestCourses();
 
-let money = new MoneyManager();
-money.addMoneyCallback = requestManager;
+//convertation
+money.conversionMoneyCallback = function(data){
+    ApiConnector.convertMoney(data, (response) => {
+        showMessage(response);
+    });  
+};
 
-function requestManager(){
-    ApiConnector.addMoney(addMoneyCallback, (response) => {console.log(response)});
-    //Используйте аргумент функции свойства addMoneyCallback для передачи данных data в запрос.
+//transaction
+money.sendMoneyCallback = function(data){
+    ApiConnector.convertMoney.(data, (response) => {
+        //ApiConnector._parseResponseBody(data.amount);
+        console.log(response);
+        console.log(data);
+        console.log(data.amount);
+        //ApiConnector.transferMoney({ response.to, response.currency, response.amount}, callback)
+        showMessage(response);
+    });  
+};
+
+//favorites list
+let favorites = new FavoritesWidget();
+
+function fillTable(response){
+    favorites.clearTable();
+    favorites.fillTable(response.data);
+    money.updateUsersList(response.data); 
+}
+
+ApiConnector.getFavorites((response) => {
+    if (response.success){
+        fillTable(response);
+    }
+});
+
+//add user
+favorites.addUserCallback = function(data){
+    let userName = data.name
+    ApiConnector.addUserToFavorites(data, (response) => {
+        if (response.success){
+            fillTable(response);
+            favorites.setMessage(false, `${userName} успешно добавлен`);
+        }   else {
+            favorites.setMessage(true, response.data);
+        }
+    });
+}
+
+//remove user
+favorites.removeUserCallback = function(data){
+    let userId = data
+    ApiConnector.removeUserFromFavorites(data, (response) => {
+        if (response.success){
+            fillTable(response);
+            favorites.setMessage(false, `адрес с ID ${userId} успешно удален`);
+        }   else {
+            favorites.setMessage(true,response.data);
+        }
+    });
 }
