@@ -58,7 +58,7 @@ money.conversionMoneyCallback = function(data){
 
 //transaction
 money.sendMoneyCallback = function(data){
-    ApiConnector.convertMoney.(data, (response) => {
+    ApiConnector.convertMoney(data, (response) => {
         //ApiConnector._parseResponseBody(data.amount);
         console.log(response);
         console.log(data);
