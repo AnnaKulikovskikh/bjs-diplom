@@ -58,7 +58,7 @@ money.conversionMoneyCallback = function(data){
 
 //transaction
 money.sendMoneyCallback = function(data){
-    ApiConnector.convertMoney(data, (response) => {
+    ApiConnector.transferMoney(data, (response) => {
         //ApiConnector._parseResponseBody(data.amount);
         console.log(response);
         console.log(data);
@@ -89,9 +89,9 @@ favorites.addUserCallback = function(data){
     ApiConnector.addUserToFavorites(data, (response) => {
         if (response.success){
             fillTable(response);
-            favorites.setMessage(false, `${userName} успешно добавлен`);
+            favorites.setMessage(true, `${userName} успешно добавлен`);
         }   else {
-            favorites.setMessage(true, response.data);
+            favorites.setMessage(false, response.data);
         }
     });
 }
@@ -102,9 +102,9 @@ favorites.removeUserCallback = function(data){
     ApiConnector.removeUserFromFavorites(data, (response) => {
         if (response.success){
             fillTable(response);
-            favorites.setMessage(false, `адрес с ID ${userId} успешно удален`);
+            favorites.setMessage(true, `адрес с ID ${userId} успешно удален`);
         }   else {
-            favorites.setMessage(true,response.data);
+            favorites.setMessage(false,response.data);
         }
     });
 }

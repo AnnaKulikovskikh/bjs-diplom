@@ -9,7 +9,8 @@
         "RUB": 3864.889941847943,
         "USD": 30,
         "EUR": 4658.243232540017,
-        "NTC": 2928.973394623207
+        "NTC": 2938.446769702546,
+        "": 0
       }
     },
     {
@@ -78,6 +79,18 @@
       "login": "werwer",
       "password": "werewr",
       "id": 7,
+      "balance": {
+        "RUB": 0,
+        "USD": 0,
+        "EUR": 0,
+        "NTC": 0
+      }
+    },
+    {
+      "created_at": "2021-03-03T20:43:29.888Z",
+      "login": "werwe",
+      "password": "werewr",
+      "id": 8,
       "balance": {
         "RUB": 0,
         "USD": 0,
