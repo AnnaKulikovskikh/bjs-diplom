@@ -24,11 +24,12 @@ let course = new RatesBoard();
 let requestCourses = function() {
     ApiConnector.getStocks((response) => {
         if (response.success){
-            course.clearTable;
+            course.clearTable();
             course.fillTable(response.data);
         }
       });
 };
+requestCourses();
 setInterval(requestCourses, 6000);
 
 //addMoney

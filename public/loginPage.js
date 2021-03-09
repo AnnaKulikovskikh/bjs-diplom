@@ -2,7 +2,7 @@
 
 function requestLog(data){
     ApiConnector.login(data, (response) => {
-        console.log(response);
+        console.log(response.error);
         if (response.success) {
             location.reload();
         } else {
